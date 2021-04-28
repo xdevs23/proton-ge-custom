@@ -76,11 +76,15 @@ Vagrant.configure(2) do |config|
 
       #install host build-time dependencies
       apt-get update
+      apt install -y libgmp-dev libmpfr-dev libmpc-dev libmpc-dev:i386
       apt-get install -y ccache texinfo gpgv2 gnupg2 git docker-ce docker-ce-cli containerd.io \
-          fontforge-nox python-debian python-pip meson libmpc-dev libmpc-dev:i386 \
+          fontforge-nox python-debian python-pip meson \
           gcc g++ gcc-i686-linux-gnu g++-i686-linux-gnu binutils-i686-linux-gnu \
           gcc-mingw-w64-i686 gcc-mingw-w64-x86-64 \
-          g++-mingw-w64-i686 g++-mingw-w64-x86-64
+          g++-mingw-w64-i686 g++-mingw-w64-x86-64 \
+          fontforge python3-pip python-pip
+
+      pip3 install afdko
 
       update-alternatives --set x86_64-w64-mingw32-gcc `which x86_64-w64-mingw32-gcc-posix`
       update-alternatives --set x86_64-w64-mingw32-g++ `which x86_64-w64-mingw32-g++-posix`
