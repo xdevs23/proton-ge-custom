@@ -84,15 +84,20 @@ Vagrant.configure(2) do |config|
           g++-mingw-w64-i686 g++-mingw-w64-x86-64 \
           python3-pip python-pip
 
-      pip3 install afdko
+      mkdir afdko
+      pushd afdko
+      wget https://github.com/adobe-type-tools/afdko/releases/download/3.6.2/afdko-3.6.2.tar.gz -O afdko.tar.gz
+      tar -xvf afdko.tar.gz
+      pushd afdko-*
+      pip3 install wheel
+      pip3 install .
+      popd
+      popd
 
       update-alternatives --set x86_64-w64-mingw32-gcc `which x86_64-w64-mingw32-gcc-posix`
       update-alternatives --set x86_64-w64-mingw32-g++ `which x86_64-w64-mingw32-g++-posix`
       update-alternatives --set i686-w64-mingw32-gcc `which i686-w64-mingw32-gcc-posix`
       update-alternatives --set i686-w64-mingw32-g++ `which i686-w64-mingw32-g++-posix`
-
-      #install adobe font devkit to build source san hans
-      pip install afdko
 
       #allow vagrant user to run docker
       adduser vagrant docker
