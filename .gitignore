@@ -5,3 +5,6 @@
 
 /.vagrant/
 /vagrant_share/
+
+/buildlog.txt
+/patchlog.txt
