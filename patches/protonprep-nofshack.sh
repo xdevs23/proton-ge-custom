@@ -93,7 +93,7 @@
     patch -Np1 < ../patches/game-patches/assettocorsa-hud.patch
 
     echo "origin downloads fix" 
-    patch -Np1 < ../patches/game-patches/origin-downloads_fix.patch
+    #patch -Np1 < ../patches/game-patches/origin-downloads_fix.patch
         
     # TODO: Add game-specific check
     echo "mk11 patch"
