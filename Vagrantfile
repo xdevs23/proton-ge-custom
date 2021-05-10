@@ -94,25 +94,20 @@ Vagrant.configure(2) do |config|
       popd
       popd
 
-      update-alternatives --set x86_64-w64-mingw32-gcc `which x86_64-w64-mingw32-gcc-posix`
-      update-alternatives --set x86_64-w64-mingw32-g++ `which x86_64-w64-mingw32-g++-posix`
-      update-alternatives --set i686-w64-mingw32-gcc `which i686-w64-mingw32-gcc-posix`
-      update-alternatives --set i686-w64-mingw32-g++ `which i686-w64-mingw32-g++-posix`
+      # use python 3 to avoid python2 afdko breakage
+      apt-get install -y python3-pip
+      update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 
       #allow vagrant user to run docker
       adduser vagrant docker
 
-      #add steamrt docker
-      docker pull registry.gitlab.steamos.cloud/steamrt/soldier/sdk
-      docker image tag registry.gitlab.steamos.cloud/steamrt/soldier/sdk steam-proton-dev
+      # use faster overlay2 docker driver
+      echo '{"storage-driver": "overlay2"}' >/etc/docker/daemon.json
 
       #allow user to run stuff in steamrt
       sysctl kernel.unprivileged_userns_clone=1
       mkdir -p /etc/sysctl.d/
       echo kernel.unprivileged_userns_clone=1 > /etc/sysctl.d/docker_user.conf
-
-      # the script below will set up the steam-runtime docker containers
-      sudo -u vagrant /home/vagrant/proton/vagrant-user-setup.sh
 
       #ensure we use only the mingw-w64 that we built
       apt-get remove -y '*mingw-w64*'
